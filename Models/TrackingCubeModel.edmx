@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TrackingCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="sp_DataExceptions_MissingPaymentCodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startDate" Type="datetime" Mode="In" />
+          <Parameter Name="endDate" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="TrackingCubeModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrackingCubeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TrackingCubeModels" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="sp_DataExceptions_MissingPaymentCodes" ReturnType="Collection(TrackingCubeModel.sp_DataExceptions_MissingPaymentCodes_Result)">
+            <Parameter Name="startDate" Mode="In" Type="DateTime" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_DataExceptions_MissingPaymentCodes_Result">
+          <Property Type="Int32" Name="payment_id" Nullable="false" />
+          <Property Type="Int32" Name="enrollment_id" Nullable="true" />
+          <Property Type="Int32" Name="pmt_type_id" Nullable="true" />
+          <Property Type="Int32" Name="pmt_status_id" Nullable="true" />
+          <Property Type="Int32" Name="trans_type_id" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="address1" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="address2" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="city" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="state" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="zip" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="country" Nullable="true" />
+          <Property Type="Decimal" Name="amount" Nullable="true" Precision="19" />
+          <Property Type="DateTime" Name="pmt_date" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="cc_type_id" Nullable="true" />
+          <Property Type="String" Name="cc_number" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="cc_exp" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="auth_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="txn_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="payee" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="bank_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="bank_city" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="bank_state" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="routing_number" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="aba_number" Nullable="true" MaxLength="16" />
+          <Property Type="String" Name="account_number" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="check_number" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="check_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="memo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="memo2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="notes" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="remote_addr" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="remote_host" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="remote_user" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="paid_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="paid_verify" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="pop_status" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="pop_action_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="pop_avs_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="pop_error_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="pop_error_message" Nullable="true" MaxLength="512" />
+          <Property Type="String" Name="pop_ref_code" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="member_id" Nullable="true" />
+          <Property Type="DateTime" Name="check_deposit_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="hidden_cc_num" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="reconciled" Nullable="true" />
+          <Property Type="DateTime" Name="dt_reconciled" Nullable="true" Precision="23" />
+          <Property Type="String" Name="renewal" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="reminder_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PaymentStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TransactionType" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrackingCubeModelStoreContainer" CdmEntityContainer="TrackingCubeModels" >
+          <FunctionImportMapping FunctionImportName="sp_DataExceptions_MissingPaymentCodes" FunctionName="TrackingCubeModel.Store.sp_DataExceptions_MissingPaymentCodes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrackingCubeModel.sp_DataExceptions_MissingPaymentCodes_Result">
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="enrollment_id" ColumnName="enrollment_id" />
+                <ScalarProperty Name="pmt_type_id" ColumnName="pmt_type_id" />
+                <ScalarProperty Name="pmt_status_id" ColumnName="pmt_status_id" />
+                <ScalarProperty Name="trans_type_id" ColumnName="trans_type_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address1" ColumnName="address1" />
+                <ScalarProperty Name="address2" ColumnName="address2" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="pmt_date" ColumnName="pmt_date" />
+                <ScalarProperty Name="cc_type_id" ColumnName="cc_type_id" />
+                <ScalarProperty Name="cc_number" ColumnName="cc_number" />
+                <ScalarProperty Name="cc_exp" ColumnName="cc_exp" />
+                <ScalarProperty Name="auth_code" ColumnName="auth_code" />
+                <ScalarProperty Name="txn_code" ColumnName="txn_code" />
+                <ScalarProperty Name="payee" ColumnName="payee" />
+                <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+                <ScalarProperty Name="bank_city" ColumnName="bank_city" />
+                <ScalarProperty Name="bank_state" ColumnName="bank_state" />
+                <ScalarProperty Name="routing_number" ColumnName="routing_number" />
+                <ScalarProperty Name="aba_number" ColumnName="aba_number" />
+                <ScalarProperty Name="account_number" ColumnName="account_number" />
+                <ScalarProperty Name="check_number" ColumnName="check_number" />
+                <ScalarProperty Name="check_date" ColumnName="check_date" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="memo2" ColumnName="memo2" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="remote_addr" ColumnName="remote_addr" />
+                <ScalarProperty Name="remote_host" ColumnName="remote_host" />
+                <ScalarProperty Name="remote_user" ColumnName="remote_user" />
+                <ScalarProperty Name="paid_date" ColumnName="paid_date" />
+                <ScalarProperty Name="paid_verify" ColumnName="paid_verify" />
+                <ScalarProperty Name="pop_status" ColumnName="pop_status" />
+                <ScalarProperty Name="pop_action_code" ColumnName="pop_action_code" />
+                <ScalarProperty Name="pop_avs_code" ColumnName="pop_avs_code" />
+                <ScalarProperty Name="pop_error_code" ColumnName="pop_error_code" />
+                <ScalarProperty Name="pop_error_message" ColumnName="pop_error_message" />
+                <ScalarProperty Name="pop_ref_code" ColumnName="pop_ref_code" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="check_deposit_date" ColumnName="check_deposit_date" />
+                <ScalarProperty Name="hidden_cc_num" ColumnName="hidden_cc_num" />
+                <ScalarProperty Name="reconciled" ColumnName="reconciled" />
+                <ScalarProperty Name="dt_reconciled" ColumnName="dt_reconciled" />
+                <ScalarProperty Name="renewal" ColumnName="renewal" />
+                <ScalarProperty Name="reminder_date" ColumnName="reminder_date" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
