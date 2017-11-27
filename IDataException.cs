@@ -19,6 +19,7 @@ namespace Trawick.DataExceptions
         public  int Id { get; set; }
         public Boolean CanCorrect { get; set; }
         public string FactoryType { get; set; }
+        public DateTime ExceptionDate { get; set; }
     }
 
 

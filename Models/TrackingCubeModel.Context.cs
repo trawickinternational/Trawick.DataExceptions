@@ -40,5 +40,18 @@ namespace Trawick.DataExceptions.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DataExceptions_MissingPaymentCodes_Result>("sp_DataExceptions_MissingPaymentCodes", startDateParameter, endDateParameter);
         }
+    
+        public virtual ObjectResult<sp_DataExceptions_MissingEnrollmentPaymentRecords_Result> sp_DataExceptions_MissingEnrollmentPaymentRecords(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("startDate", startDate) :
+                new ObjectParameter("startDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("endDate", endDate) :
+                new ObjectParameter("endDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DataExceptions_MissingEnrollmentPaymentRecords_Result>("sp_DataExceptions_MissingEnrollmentPaymentRecords", startDateParameter, endDateParameter);
+        }
     }
 }

@@ -64,5 +64,6 @@ namespace Trawick.DataExceptions.Models
         public Nullable<System.DateTime> reminder_date { get; set; }
         public string PaymentStatus { get; set; }
         public string TransactionType { get; set; }
+        public Nullable<int> master_enrollment_id { get; set; }
     }
 }

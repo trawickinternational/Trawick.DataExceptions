@@ -4,19 +4,26 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TrackingCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TrackingCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="sp_DataExceptions_MissingEnrollmentPaymentRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startDate" Type="datetime" Mode="In" />
+          <Parameter Name="endDate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="sp_DataExceptions_MissingPaymentCodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="startDate" Type="datetime" Mode="In" />
           <Parameter Name="endDate" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="TrackingCubeModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TrackingCubeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TrackingCubeModels" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="sp_DataExceptions_MissingPaymentCodes" ReturnType="Collection(TrackingCubeModel.sp_DataExceptions_MissingPaymentCodes_Result)">
+            <Parameter Name="startDate" Mode="In" Type="DateTime" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DataExceptions_MissingEnrollmentPaymentRecords" ReturnType="Collection(TrackingCubeModel.sp_DataExceptions_MissingEnrollmentPaymentRecords_Result)">
             <Parameter Name="startDate" Mode="In" Type="DateTime" />
             <Parameter Name="endDate" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -73,6 +80,15 @@
           <Property Type="DateTime" Name="reminder_date" Nullable="true" Precision="23" />
           <Property Type="String" Name="PaymentStatus" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="TransactionType" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="master_enrollment_id" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DataExceptions_MissingEnrollmentPaymentRecords_Result">
+          <Property Type="Int32" Name="master_enrollment_id" Nullable="true" />
+          <Property Type="DateTime" Name="pmt_date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="amount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="PaymentStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TransactionType" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="payment_id" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -134,6 +150,19 @@
                 <ScalarProperty Name="reminder_date" ColumnName="reminder_date" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="master_enrollment_id" ColumnName="master_enrollment_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DataExceptions_MissingEnrollmentPaymentRecords" FunctionName="TrackingCubeModel.Store.sp_DataExceptions_MissingEnrollmentPaymentRecords">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrackingCubeModel.sp_DataExceptions_MissingEnrollmentPaymentRecords_Result">
+                <ScalarProperty Name="master_enrollment_id" ColumnName="master_enrollment_id" />
+                <ScalarProperty Name="pmt_date" ColumnName="pmt_date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
