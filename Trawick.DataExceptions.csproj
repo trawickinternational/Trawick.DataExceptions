@@ -54,10 +54,18 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationHelper.cs" />
     <Compile Include="Configuration\ConfigurationSection.cs" />
+    <Compile Include="ExceptionClasses\EnrollmentMissingBaseform.cs" />
+    <Compile Include="ExceptionClasses\MissingEnrollmentDates.cs" />
     <Compile Include="ExceptionClasses\MissingEnrollmentPayment.cs" />
     <Compile Include="ExceptionClasses\MissingEnrollmentPaymentRecords.cs" />
     <Compile Include="ExceptionClasses\MissingPaymentCode.cs" />
     <Compile Include="IDataException.cs" />
+    <Compile Include="Models\sp_DataExceptions_EnrollmentsWithoutBaseform_Result.cs">
+      <DependentUpon>TrackingCubeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_DataExceptions_MissingEnrollmentDates_Result.cs">
+      <DependentUpon>TrackingCubeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_DataExceptions_MissingEnrollmentPaymentRecords_Result.cs">
       <DependentUpon>TrackingCubeModel.tt</DependentUpon>
     </Compile>

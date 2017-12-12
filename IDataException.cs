@@ -9,7 +9,7 @@ namespace Trawick.DataExceptions
   public interface IDataExceptionFactory
     {
         List<DataException> GetDataExceptions(ExceptionListParamaters parms);
-        Boolean CorrectById(int Id);
+        List<CorrectionById> CorrectById(List<string> Ids);
 
     }
 
@@ -27,6 +27,13 @@ namespace Trawick.DataExceptions
     {
         public DateTime BeginDate { get; set; }
        public  DateTime EndDate { get; set; }
+    }
+
+    public class CorrectionById
+    {
+        public string Id { get; set; }
+        public Boolean Corrected { get; set; }
+        public string Message { get; set; }
     }
 
 }

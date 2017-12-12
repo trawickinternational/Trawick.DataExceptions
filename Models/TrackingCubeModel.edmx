@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TrackingCubeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="sp_DataExceptions_EnrollmentsWithoutBaseform" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startDate" Type="datetime" Mode="In" />
+          <Parameter Name="endDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_DataExceptions_MissingEnrollmentDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startDate" Type="datetime" Mode="In" />
+          <Parameter Name="endDate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="sp_DataExceptions_MissingEnrollmentPaymentRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="startDate" Type="datetime" Mode="In" />
           <Parameter Name="endDate" Type="datetime" Mode="In" />
@@ -24,6 +32,14 @@
             <Parameter Name="endDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="sp_DataExceptions_MissingEnrollmentPaymentRecords" ReturnType="Collection(TrackingCubeModel.sp_DataExceptions_MissingEnrollmentPaymentRecords_Result)">
+            <Parameter Name="startDate" Mode="In" Type="DateTime" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DataExceptions_MissingEnrollmentDates" ReturnType="Collection(TrackingCubeModel.sp_DataExceptions_MissingEnrollmentDates_Result)">
+            <Parameter Name="startDate" Mode="In" Type="DateTime" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DataExceptions_EnrollmentsWithoutBaseform" ReturnType="Collection(TrackingCubeModel.sp_DataExceptions_EnrollmentsWithoutBaseform_Result)">
             <Parameter Name="startDate" Mode="In" Type="DateTime" />
             <Parameter Name="endDate" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -89,6 +105,42 @@
           <Property Type="String" Name="PaymentStatus" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="TransactionType" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="payment_id" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_DataExceptions_MissingEnrollmentDates_Result">
+          <Property Type="DateTime" Name="PremiumDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Transactiontype" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="master_enrollment_id" Nullable="false" />
+          <Property Type="Int32" Name="enrollment_premium_id" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_DataExceptions_EnrollmentsWithoutBaseform_Result">
+          <Property Type="Int32" Name="master_enrollment_id" Nullable="false" />
+          <Property Type="Int32" Name="roster_id" Nullable="true" />
+          <Property Type="Int32" Name="school_id" Nullable="true" />
+          <Property Type="Int32" Name="policy_id" Nullable="true" />
+          <Property Type="Int32" Name="rate_id" Nullable="true" />
+          <Property Type="DateTime" Name="dt_cr" Nullable="true" Precision="23" />
+          <Property Type="String" Name="school_name" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="enrollment_status_id" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="enrollment_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="group_no" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="cert_no" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="cov_key" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="enroll_class" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="enroll_type" Nullable="true" MaxLength="15" />
+          <Property Type="DateTime" Name="date_id_card_sent" Nullable="true" Precision="23" />
+          <Property Type="String" Name="bill_mode" Nullable="true" MaxLength="15" />
+          <Property Type="Boolean" Name="tempReconciled" Nullable="true" />
+          <Property Type="Int32" Name="claim_payment_status" Nullable="true" />
+          <Property Type="DateTime" Name="dt_reconcile" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="enrollment_type_id" Nullable="true" />
+          <Property Type="DateTime" Name="date_id_card_print" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="date_member_login" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="date_book_marked" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="agent_id" Nullable="false" />
+          <Property Type="String" Name="agent_ref_no" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="parent_master_enrollment_id" Nullable="true" />
+          <Property Type="Int32" Name="plan_id" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -163,6 +215,50 @@
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
                 <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DataExceptions_MissingEnrollmentDates" FunctionName="TrackingCubeModel.Store.sp_DataExceptions_MissingEnrollmentDates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrackingCubeModel.sp_DataExceptions_MissingEnrollmentDates_Result">
+                <ScalarProperty Name="PremiumDate" ColumnName="PremiumDate" />
+                <ScalarProperty Name="Transactiontype" ColumnName="Transactiontype" />
+                <ScalarProperty Name="master_enrollment_id" ColumnName="master_enrollment_id" />
+                <ScalarProperty Name="enrollment_premium_id" ColumnName="enrollment_premium_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DataExceptions_EnrollmentsWithoutBaseform" FunctionName="TrackingCubeModel.Store.sp_DataExceptions_EnrollmentsWithoutBaseform">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrackingCubeModel.sp_DataExceptions_EnrollmentsWithoutBaseform_Result">
+                <ScalarProperty Name="master_enrollment_id" ColumnName="master_enrollment_id" />
+                <ScalarProperty Name="roster_id" ColumnName="roster_id" />
+                <ScalarProperty Name="school_id" ColumnName="school_id" />
+                <ScalarProperty Name="policy_id" ColumnName="policy_id" />
+                <ScalarProperty Name="rate_id" ColumnName="rate_id" />
+                <ScalarProperty Name="dt_cr" ColumnName="dt_cr" />
+                <ScalarProperty Name="school_name" ColumnName="school_name" />
+                <ScalarProperty Name="enrollment_status_id" ColumnName="enrollment_status_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="enrollment_date" ColumnName="enrollment_date" />
+                <ScalarProperty Name="group_no" ColumnName="group_no" />
+                <ScalarProperty Name="cert_no" ColumnName="cert_no" />
+                <ScalarProperty Name="cov_key" ColumnName="cov_key" />
+                <ScalarProperty Name="enroll_class" ColumnName="enroll_class" />
+                <ScalarProperty Name="enroll_type" ColumnName="enroll_type" />
+                <ScalarProperty Name="date_id_card_sent" ColumnName="date_id_card_sent" />
+                <ScalarProperty Name="bill_mode" ColumnName="bill_mode" />
+                <ScalarProperty Name="tempReconciled" ColumnName="tempReconciled" />
+                <ScalarProperty Name="claim_payment_status" ColumnName="claim_payment_status" />
+                <ScalarProperty Name="dt_reconcile" ColumnName="dt_reconcile" />
+                <ScalarProperty Name="enrollment_type_id" ColumnName="enrollment_type_id" />
+                <ScalarProperty Name="date_id_card_print" ColumnName="date_id_card_print" />
+                <ScalarProperty Name="date_member_login" ColumnName="date_member_login" />
+                <ScalarProperty Name="date_book_marked" ColumnName="date_book_marked" />
+                <ScalarProperty Name="agent_id" ColumnName="agent_id" />
+                <ScalarProperty Name="agent_ref_no" ColumnName="agent_ref_no" />
+                <ScalarProperty Name="parent_master_enrollment_id" ColumnName="parent_master_enrollment_id" />
+                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

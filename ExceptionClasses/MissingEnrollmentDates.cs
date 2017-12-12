@@ -6,23 +6,22 @@ using System.Threading.Tasks;
 
 namespace Trawick.DataExceptions.ExceptionClasses
 {
-    public class MissingEnrollmentPaymentFactory : IDataExceptionFactory
+    public class MissingEnrollmentDatesFactory : IDataExceptionFactory
     {
 
-        public MissingEnrollmentPaymentFactory() { }
+        public MissingEnrollmentDatesFactory() { }
+
         public List<CorrectionById> CorrectById(List<string> Ids)
         {
-           foreach(var item in Ids)
-            {
-               //Do Correction
-            }
-            return new List<CorrectionById>();
+            throw new NotImplementedException();
         }
+
+      
 
         public List<DataException> GetDataExceptions(ExceptionListParamaters parms)
         {
             var cont = new Models.TrackingCubeModels();
-            var list = cont.sp_DataExceptions_MissingEnrollmentPaymentRecords(parms.BeginDate, parms.EndDate);
+            var list = cont.sp_DataExceptions_MissingEnrollmentDates(parms.BeginDate, parms.EndDate);
             var exceptions = new List<DataException>();
             foreach (var item in list)
             {
@@ -32,15 +31,15 @@ namespace Trawick.DataExceptions.ExceptionClasses
         }
 
 
-        private DataException ExceptionFromResult(Models.sp_DataExceptions_MissingEnrollmentPaymentRecords_Result  result)
+        private DataException ExceptionFromResult(Models.sp_DataExceptions_MissingEnrollmentDates_Result   result)
         {
             var item = new DataException()
             {
                 CanCorrect = false,
                 FactoryType = this.GetType().AssemblyQualifiedName,
-                Id = result.master_enrollment_id.GetValueOrDefault(),
-                Message = string.Format("The Enrollment with Id {0} has a missing Enrollment Payment Record.  Payment Id Id {1}", result.master_enrollment_id.ToString(), result.payment_id.ToString())
-                ,ExceptionDate = result.pmt_date.GetValueOrDefault()
+                Id = result.master_enrollment_id,
+                Message = string.Format("The Enrollment with Id {0} has a missing Enrollment Dates for Enrollment Premium  {1}", result.master_enrollment_id.ToString(), result.enrollment_premium_id.ToString())
+                ,ExceptionDate = result.PremiumDate.GetValueOrDefault()
             };
 
             return item;
