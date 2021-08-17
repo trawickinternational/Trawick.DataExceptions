@@ -10,10 +10,17 @@ namespace Trawick.DataExceptions.ExceptionClasses
     {
 
         public MissingPaymentsFactory() { }
+
         public bool CorrectById(int Id)
         {
             throw new NotImplementedException();
         }
+
+        public List<CorrectionById> CorrectById(List<string> Ids)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public List<DataException> GetDataExceptions(ExceptionListParamaters parms)
         {
